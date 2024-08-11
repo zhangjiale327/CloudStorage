@@ -1,0 +1,80 @@
+#ifndef PROTOCOL_H
+#define PROTOCOL_H
+typedef unsigned int uint;
+//枚举消息类型
+enum ENUM_MSG_TYPE{
+    ENUM_MSG_TYPE_MIN=0,
+    ENUM_MSG_TYPE_REGIST_REQUEST, //注册申请请求
+    ENUM_MSG_TYPE_REGIST_RESPEND, //注册响应请求
+    ENUM_MSG_TYPE_LOGOFF_REQUEST, //注销申请请求
+    ENUM_MSG_TYPE_LOGOFF_RESPEND, //注销响应请求
+    ENUM_MSG_TYPE_LOGIN_REQUEST,//登录申请请求
+    ENUM_MSG_TYPE_LOGIN_RESPEND,//登录响应请求
+    ENUM_MSG_TYPE_FINDFRIEND_REQUEST,//查找好友请求
+    ENUM_MSG_TYPE_FINDFRIEND_RESPEND,//查找好友响应
+    ENUM_MSG_TYPE_ONLINEUSER_REQUEST,//查看在线好友请求
+    ENUM_MSG_TYPE_ONLINEUSER_RESPEND,//查看在线好友响应
+    ENUM_MSG_TYPE_ADD_FRIEND_REQUEST,//添加好友请求
+    ENUM_MSG_TYPE_ADD_FRIEND_RESPEND,//添加好友响应
+    ENUM_MSG_TYPE_ADD_AGREE_REQUEST,//同意添加好友请求
+    ENUM_MSG_TYPE_ADD_AGREE_RESPEND,//同意添加好友响应
+    ENUM_MSG_TYPE_ADD_UNAGREE_REQUEST,//不同意添加好友请求
+    ENUM_MSG_TYPE_ADD_UNAGREE_RESPEND,//不同意添加好友响应
+    ENUM_MSG_TYPE_FLUSH_FRIEND_ONLINE_REQUEST,//刷新在线好友请求
+    ENUM_MSG_TYPE_FLUST_FRIEND_ONLINE_RESPEND,//刷新在线好友响应
+    ENUM_MSG_TYPE_DEL_ONLINE_FRIEND_REQUEST,//删除在线好友请求
+    NUM_MSG_TYPE_DEL_ONLINE_FRIEND_RESPEND,//删除在线好友响应
+    ENUM_MSG_TYPE_CHAT_FRIEND_REQUEST,//好友聊天请求
+    NUM_MSG_TYPE_CHAT_FRIEND_RESPEND,//好友聊天响应
+    ENUM_MSG_TYPE_MKDIR_REQUEST,//创建文件请求
+    NUM_MSG_TYPE_MKDIR_RESPEND,//创建文件响应
+    ENUM_MSG_TYPE_FLUSH_FILE_REQUEST,//刷新文件请求
+    ENUM_MSG_TYPE_FLUSH_FILE_RESPEND,//刷新文件响应
+    ENUM_MSG_TYPE_DEL_DIR_REQUEST,//删除文件夹请求
+    ENUM_MSG_TYPE_DEL_DIR_RESPEND,//删除文件夹响应
+    ENUM_MSG_TYPE_DEL_FILE_REQUEST,//删除文件请求
+    ENUM_MSG_TYPE_DEL_FILE_RESPEND,//删除文件响应
+    ENUM_MSG_TYPE_RENAME_REQUEST,//重命名文件请求
+    ENUM_MSG_TYPE_RENAME_RESPEND,//重命名文件响应
+
+    ENUM_MSG_TYPE_MVFILE_REQUEST,//移动文件请求
+    ENUM_MSG_TYPE_MVFILE_RESPEND,//移动文件响应
+
+    ENUM_MSG_TYPE_UPLOAD_REQUEST,//上传文件请求
+    ENUM_MSG_TYPE_UPLOAD_RESPEND,//上传文件响应
+
+    ENUM_MSG_TYPE_UPLOAD_DATA_REQUEST,//上传文件数据请求
+    ENUM_MSG_TYPE_UPLOAD_DATA_RESPEND,//上传文件数据响应
+
+
+    ENUM_MSG_TYPE_SHARE_FILE_REQUEST,//分享文件数据请求
+    ENUM_MSG_TYPE_SHARE_FILE_RESPEND,//分享文件数据响应
+
+    ENUM_MSG_TYPE_SHARE_FILE_AGREE_REQUEST,//分享文件同意请求
+    ENUM_MSG_TYPE_SHARE_FILE_AGREE_RESPEND,//分享文件同意响应
+
+    ENUM_MSG_TYPE_LOAD_FILE_REQUEST,//下载文件请求
+    ENUM_MSG_TYPE_LOAD_FILE_RESPEND,//下载文件响应
+
+    ENUM_MSG_TYPE_LOAD_FILE_AGREE_REQUEST,//下载文件同意请求
+    ENUM_MSG_TYPE_LOAD_FILE_AGREE_RESPEND,//下载文件同意响应
+    ENUM_MSG_TYPE_MAX=0X00fffff,
+};
+
+
+
+struct PDU{//协议数据单元结构体
+    uint uiPDULen;//总的协议数据长度
+    uint uiMsgLen;//实际消息长度
+    uint uiMsgType;//消息类型
+    char uiData[64];//参数
+    char caMsg[];//柔性数组-实际消息内容
+};
+
+struct FileInfo{
+    char FileName[32]; //文件名
+    int  FileType;     //文件类型
+};
+
+PDU* mkPDU(uint uiMsgLen ); //初始化协议结构体
+#endif // PROTOCOL_H
